@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="portfolioApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tejasvi Kale - Web Developer Portfolio | Front-end Developer | Computer Science Graduate">
+  <meta name="keywords" content="web developer, front-end, HTML, CSS, JavaScript, AngularJS, portfolio">
+  <meta name="author" content="Tejasvi Kale">
+  <title>Tejasvi Kale | Web Developer Portfolio</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+  <script src="controllers/mainController.js"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="MainController">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="#home">{{name}}</a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#internship" class="nav-link">Internship</a></li>
+        <li><a href="#education" class="nav-link">Education</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">{{name}}</h1>
+        <p class="hero-subtitle"><span id="typewriter"></span></p>
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#internship" class="btn btn-secondary">Internship</a>
+          <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+        </div>
+        <!-- Resume Section (moved here) -->
+        <div class="resume-actions resume-front">
+          <input type="file" id="resumeInput" style="display:none" accept=".pdf,.doc,.docx" onchange="angular.element(this).scope().uploadResume(this.files)" />
+          <button class="btn btn-resume-upload" ng-click="triggerResumeUpload()">Upload Resume</button>
+          <button class="btn btn-resume-view" ng-click="viewResume()">View Resume</button>
+          <span ng-if="resumeName" class="resume-uploaded">Uploaded: {{resumeName}}</span>
+        </div>
+        <div class="social-links">
+          <a href="{{linkedin}}" target="_blank" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://github.com/" target="_blank" class="social-link">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="mailto:{{personalDetails.email}}" class="social-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <img ng-src="{{profileImageUrl || 'img/profile.jpg'}}" alt="Profile" class="profile-image">
+            <input type="file" id="profilePicInput" accept="image/*" class="profile-input" onchange="angular.element(this).scope().uploadProfilePic(this.files)">
+            <button ng-click="triggerProfilePicUpload()" class="profile-camera-btn">
+              <i class="fas fa-camera"></i>
+            </button>
+            <div class="profile-degree">M.Sc. Computer Science</div>
+          </div>
+          <h3>Innovative Full Stack Developer</h3>
+          <p>Crafting modern web solutions with passion and precision.</p>
+        </div>
+      </div>
+    </div>
+    <div class="shape-divider">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="shape-svg"><path d="M0,0V46.29c47.29,22.09,104.09,29,158,17.39C288.13,44.22,339.09,4.22,400,0c60.91-4.22,113.09,35.78,172,39.17,59.13,3.39,112.09-36.61,172-39.17,60.09-2.56,113.09,35.78,172,39.17,59.13,3.39,112.09-36.61,172-39.17,53.91-3.39,110.71,4.3,158,17.39V0Z" opacity=".25" fill="#fff"></path><path d="M0,0V15.81C47.29,37.9,104.09,44.81,158,33.2,288.13,10.13,339.09-29.87,400-34.09c60.91-4.22,113.09,35.78,172,39.17,59.13,3.39,112.09-36.61,172-39.17,60.09-2.56,113.09,35.78,172,39.17,59.13,3.39,112.09-36.61,172-39.17,53.91-3.39,110.71,4.3,158,17.39V0Z" opacity=".5" fill="#fff"></path><path d="M0,0V5.63C47.29,27.72,104.09,34.63,158,23.02,288.13,0,339.09-40,400-44.22c60.91-4.22,113.09,35.78,172,39.17,59.13,3.39,112.09-36.61,172-39.17,60.09-2.56,113.09,35.78,172,39.17,59.13,3.39,112.09-36.61,172-39.17,53.91-3.39,110.71,4.3,158,17.39V0Z" fill="#fff"></path></svg>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="personal-details-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p class="about-description">
+            I am a dedicated and results-driven web developer with a strong background in modern web technologies. My expertise lies in building scalable, user-centric applications using React, Node.js, Express, and MongoDB. I am committed to continuous learning and delivering high-quality solutions that drive business success.
+          </p>
+          <h3 class="personal-details-title">Personal Details</h3>
+          <div class="about-details">
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{personalDetails.address}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-calendar-alt"></i>
+              <span>{{personalDetails.dateOfBirth}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-language"></i>
+              <span>{{personalDetails.languages.join(', ')}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-user"></i>
+              <span>Gender: {{personalDetails.gender}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-heart"></i>
+              <span>Marital Status: {{personalDetails.maritalStatus}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-phone"></i>
+              <span>Phone: {{personalDetails.phoneNumbers.join(', ')}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-envelope"></i>
+              <span>Email: <a href="mailto:{{personalDetails.email}}">{{personalDetails.email}}</a></span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-envelope"></i>
+              <span>College Email: <a href="mailto:{{personalDetails.collegeEmail}}">{{personalDetails.collegeEmail}}</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Technical Skills & Technologies</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Machine Learning</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in machineLearningSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Data Analysis</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in dataAnalysisSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Programming</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in programmingSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Visualization</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in visualizationSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Web Development</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in webSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Databases</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in databaseSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Other Tools</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in toolsSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Soft Skills</h3>
+          <div class="skill-items">
+            <div class="skill-item" ng-repeat="skill in softSkills">
+              <div class="skill-name">{{skill.name}}</div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: {{skill.level}}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" ng-repeat="project in projects">
+          <div class="project-image">
+            <img ng-src="{{project.image}}" alt="{{project.name}}" onerror="this.src='https://via.placeholder.com/300x200/007BFF/ffffff?text=Project'">
+          </div>
+          <div class="project-content">
+            <h3>{{project.name}}</h3>
+            <p>{{project.description}}</p>
+            <p><strong>Mentor:</strong> {{project.mentor}}</p>
+            <p><strong>Team Size:</strong> {{project.teamSize}}</p>
+            <div class="project-tech">
+              <span class="tech-tag" ng-repeat="tech in project.technologies">{{tech}}</span>
+            </div>
+            <div class="project-links">
+              <a href="{{project.link}}" target="_blank" class="btn btn-sm btn-primary">
+                <i class="fas fa-external-link-alt"></i> View Project
+              </a>
+              <a href="{{project.github}}" target="_blank" class="btn btn-sm btn-secondary" ng-if="project.github">
+                <i class="fab fa-github"></i> Code
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internship Section -->
+  <section id="internship" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Internships</h2>
+      <div class="internship-grid">
+        <div class="internship-card" ng-repeat="internship in internships">
+          <div class="internship-header">
+            <h3>{{internship.company}}</h3>
+            <span class="internship-period">{{internship.period}}</span>
+          </div>
+          <div class="internship-content">
+            <p class="internship-role"><strong>Role:</strong> {{internship.role}}</p>
+            <p class="internship-description">{{internship.description}}</p>
+            <div class="internship-details">
+              <div class="detail-item" ng-if="internship.location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{internship.location}}</span>
+              </div>
+              <div class="detail-item" ng-if="internship.type">
+                <i class="fas fa-briefcase"></i>
+                <span>{{internship.type}}</span>
+              </div>
+            </div>
+            <div class="internship-tech" ng-if="internship.technologies && internship.technologies.length > 0">
+              <strong>Technologies:</strong>
+              <div class="tech-tags">
+                <span class="tech-tag" ng-repeat="tech in internship.technologies">{{tech}}</span>
+              </div>
+            </div>
+            <div class="internship-achievements" ng-if="internship.achievements && internship.achievements.length > 0">
+              <strong>Key Achievements:</strong>
+              <ul>
+                <li ng-repeat="achievement in internship.achievements">{{achievement}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Education & Certifications</h2>
+      <div class="education-table-wrapper">
+        <table class="education-table">
+          <thead>
+            <tr>
+              <th>Degree</th>
+              <th>University</th>
+              <th>Year</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="edu in education">
+              <td>{{edu.degree}}</td>
+              <td>{{edu.institution}}</td>
+              <td>{{edu.period}}</td>
+              <td>{{edu.details}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Let's Connect</h3>
+          <p>I'm always interested in new opportunities and exciting projects. Feel free to reach out!</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span><a href="mailto:{{personalDetails.email}}">{{personalDetails.email}}</a></span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>{{personalDetails.phoneNumbers.join(', ')}}</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{personalDetails.address}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form ng-submit="sendMessage()" class="form">
+            <div class="form-group">
+              <input type="text" ng-model="contact.name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <input type="email" ng-model="contact.email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+              <input type="text" ng-model="contact.subject" placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+              <textarea ng-model="contact.message" placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2024 {{name}}. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="{{linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="mailto:{{personalDetails.email}}"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTop" class="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Typewriter effect for the hero subtitle
+    const typewriterPhrases = [
+      "Passionate about building modern, user-focused web applications.",
+      "Frontend & Backend Developer | Problem Solver.",
+      "Let's build something amazing together!"
+    ];
+    let twIndex = 0, charIndex = 0, isDeleting = false;
+    const typewriter = document.getElementById('typewriter');
+    function type() {
+      if (!typewriter) return;
+      const current = typewriterPhrases[twIndex];
+      if (isDeleting) {
+        typewriter.textContent = current.substring(0, charIndex--);
+        if (charIndex < 0) {
+          isDeleting = false;
+          twIndex = (twIndex + 1) % typewriterPhrases.length;
+          setTimeout(type, 600);
+        } else {
+          setTimeout(type, 40);
+        }
+      } else {
+        typewriter.textContent = current.substring(0, charIndex++);
+        if (charIndex > current.length) {
+          isDeleting = true;
+          setTimeout(type, 1200);
+        } else {
+          setTimeout(type, 70);
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', type);
+  </script>
+</body>
+</html>
